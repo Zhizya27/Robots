@@ -3,9 +3,7 @@ package gui;
 import log.Logger;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
 
 public class MenuBar extends JMenuBar {
 
@@ -75,29 +73,19 @@ public class MenuBar extends JMenuBar {
 
     /**
      * Строит меню "Выход", позволяющее закрыть приложение.
-     *
-     * @return Меню "Выход"
      */
     private void buildExitMenu() {
         JMenu exitMenu = new JMenu("Выход");
         exitMenu.setMnemonic(KeyEvent.VK_X);
 
         JMenuItem exitMenuItem = new JMenuItem("Закрыть приложение", KeyEvent.VK_Z);
-        exitMenuItem.addActionListener((event) -> {
-            UIManager.put("OptionPane.yesButtonText", "Да");
-            UIManager.put("OptionPane.noButtonText", "Нет");
-            int result = JOptionPane.showConfirmDialog(this,
-                    "Вы уверены, что хотите закрыть приложение?", "Подтверждение выхода",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-            if (result == JOptionPane.YES_OPTION) {
-                System.exit(0);
-            }
-        });
-
+        exitMenuItem.addActionListener((event) -> { // Добавляется слушатель событий для пункта меню "Закрыть приложение"
+                    applicationFrame.confirmAndExit();
+                });
         exitMenu.add(exitMenuItem);
-        this.add(exitMenu);
+        this.add(exitMenu); // добавляем в главное меню приложения
     }
+
     /**
      * Устанавливает выбранную схему отображения для приложения.
      *
