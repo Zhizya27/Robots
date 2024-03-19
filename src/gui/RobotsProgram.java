@@ -5,6 +5,9 @@ import java.awt.Frame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+/**
+ * Главный класс приложения для управления роботами.
+ */
 public class RobotsProgram
 {
     public static void main(String[] args) {

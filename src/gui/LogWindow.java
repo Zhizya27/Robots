@@ -11,11 +11,20 @@ import log.LogChangeListener;
 import log.LogEntry;
 import log.LogWindowSource;
 
+
+/**
+ * Класс LogWindow представляет внутреннее окно с протоколом работы.
+ */
 public class LogWindow extends JInternalFrame implements LogChangeListener
 {
     private LogWindowSource m_logSource;
     private TextArea m_logContent;
 
+    /**
+     * Создает новый экземпляр LogWindow с указанным источником протокола работы.
+     *
+     * @param logSource источник протокола работы
+     */
     public LogWindow(LogWindowSource logSource) 
     {
         super("Протокол работы", true, true, true, true);
@@ -31,6 +40,9 @@ public class LogWindow extends JInternalFrame implements LogChangeListener
         updateLogContent();
     }
 
+    /**
+     * Обновляет содержимое протокола работы.
+     */
     private void updateLogContent()
     {
         StringBuilder content = new StringBuilder();
@@ -41,7 +53,10 @@ public class LogWindow extends JInternalFrame implements LogChangeListener
         m_logContent.setText(content.toString());
         m_logContent.invalidate();
     }
-    
+
+    /**
+     * Вызывается при изменении протокола работы.
+     */
     @Override
     public void onLogChanged()
     {
