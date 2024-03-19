@@ -13,6 +13,7 @@ public class MenuBar extends JMenuBar {
 
     /**
      * Конструктор
+     * @param applicationFrame - фрейм приложения
      */
     public MenuBar(MainApplicationFrame applicationFrame) {
         JMenuBar menuBar = new JMenuBar();

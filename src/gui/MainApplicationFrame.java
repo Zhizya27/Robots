@@ -11,17 +11,15 @@ import javax.swing.*;
 import log.Logger;
 
 /**
- * Что требуется сделать:
- * 1. Метод создания меню перегружен функционалом и трудно читается.
- * Следует разделить его на серию более простых методов (или вообще выделить отдельный класс).
- *
+ * Главное окно приложения.
  */
 public class MainApplicationFrame extends JFrame {
     private final JDesktopPane desktopPane = new JDesktopPane();
 
+    /**
+     * Создает новый экземпляр главного окна приложения.
+     */
     public MainApplicationFrame() {
-        //Make the big window be indented 50 pixels from each edge
-        //of the screen.
         int inset = 50;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setBounds(inset, inset,
@@ -49,18 +47,31 @@ public class MainApplicationFrame extends JFrame {
             }
         });
     }
+
+    /**
+     * Подтверждает выход из приложения.
+     */
     private void confirmAndExit() {
-        int result = JOptionPane.showConfirmDialog(
+        Object[] options = {"Да", "Остаться"};
+        int result = JOptionPane.showOptionDialog(
                 this,
                 "Вы уверены, что хотите выйти из приложения?",
                 "Подтверждение выхода",
-                JOptionPane.YES_NO_OPTION
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[1]
         );
         if (result == JOptionPane.YES_OPTION) {
             System.exit(0); // Если пользователь подтвердил выход, закрываем приложение
         }
     }
 
+
+    /**
+     * Создает окно протокола работы(Лог - окно)
+     */
     protected LogWindow createLogWindow() {
         LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
         logWindow.setLocation(10, 10);
@@ -71,6 +82,11 @@ public class MainApplicationFrame extends JFrame {
         return logWindow;
     }
 
+    /**
+     * Добавляет внутреннее окно в рабочее пространство.
+     *
+     * @param frame внутреннее окно
+     */
     protected void addWindow(JInternalFrame frame) {
         desktopPane.add(frame);
         frame.setVisible(true);
