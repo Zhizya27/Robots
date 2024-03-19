@@ -36,8 +36,6 @@ public class MainApplicationFrame extends JFrame {
         addWindow(gameWindow);
 
         setJMenuBar(new MenuBar(this));
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // Отключаем стандартное действие при закрытии окна
         addWindowListener(new WindowAdapter() {
             @Override
@@ -63,7 +61,7 @@ public class MainApplicationFrame extends JFrame {
                 options[1]
         );
         if (result == JOptionPane.YES_OPTION) {
-            System.exit(0); // Если пользователь подтвердил выход, закрываем приложение
+            System.exit(0);
         }
     }
 
