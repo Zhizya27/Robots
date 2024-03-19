@@ -19,7 +19,9 @@ public class MenuBar extends JMenuBar {
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(buildLookAndFeelMenu());
         menuBar.add(buildTestMenu());
+        buildExitMenu();
         this.applicationFrame = applicationFrame;
+        this.add(menuBar);
     }
 
     /**
@@ -76,26 +78,26 @@ public class MenuBar extends JMenuBar {
      *
      * @return Меню "Выход"
      */
-    private JMenu buildExitMenu() {
+    private void buildExitMenu() {
         JMenu exitMenu = new JMenu("Выход");
         exitMenu.setMnemonic(KeyEvent.VK_X);
 
         JMenuItem exitMenuItem = new JMenuItem("Закрыть приложение", KeyEvent.VK_Z);
         exitMenuItem.addActionListener((event) -> {
+            UIManager.put("OptionPane.yesButtonText", "Да");
+            UIManager.put("OptionPane.noButtonText", "Нет");
             int result = JOptionPane.showConfirmDialog(this,
                     "Вы уверены, что хотите закрыть приложение?", "Подтверждение выхода",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
             if (result == JOptionPane.YES_OPTION) {
-                Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(
-                        new WindowEvent(this.applicationFrame, WindowEvent.WINDOW_CLOSING));
+                System.exit(0);
             }
         });
 
         exitMenu.add(exitMenuItem);
-        return exitMenu;
+        this.add(exitMenu);
     }
-
     /**
      * Устанавливает выбранную схему отображения для приложения.
      *

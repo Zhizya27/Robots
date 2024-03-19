@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -51,7 +50,7 @@ public class MainApplicationFrame extends JFrame {
     /**
      * Подтверждает выход из приложения.
      */
-    private void confirmAndExit() {
+    void confirmAndExit() {
         Object[] options = {"Да", "Остаться"};
         int result = JOptionPane.showOptionDialog(
                 this,
@@ -67,6 +66,8 @@ public class MainApplicationFrame extends JFrame {
             System.exit(0); // Если пользователь подтвердил выход, закрываем приложение
         }
     }
+
+
 
 
     /**
