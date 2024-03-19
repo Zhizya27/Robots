@@ -68,6 +68,8 @@ public class MainApplicationFrame extends JFrame {
     }
 
 
+
+
     /**
      * Создает окно протокола работы(Лог - окно)
      */
