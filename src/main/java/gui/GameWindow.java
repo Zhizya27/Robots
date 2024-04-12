@@ -1,9 +1,11 @@
 package gui;
 
-import java.awt.BorderLayout;
+import state.State;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.util.Map;
+
+import javax.swing.*;
 
 
 /**
@@ -25,4 +27,5 @@ public class GameWindow extends JInternalFrame
         getContentPane().add(panel);
         pack();
     }
+
 }

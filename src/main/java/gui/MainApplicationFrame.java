@@ -8,12 +8,15 @@ import java.awt.event.WindowEvent;
 import javax.swing.*;
 
 import log.Logger;
+import state.StateManager;
+
 
 /**
  * Главное окно приложения.
  */
 public class MainApplicationFrame extends JFrame {
     private final JDesktopPane desktopPane = new JDesktopPane();
+    private final StateManager stateManager;
 
     /**
      * Создает новый экземпляр главного окна приложения.
@@ -35,6 +38,8 @@ public class MainApplicationFrame extends JFrame {
         gameWindow.setSize(400, 400);
         addWindow(gameWindow);
 
+        stateManager = new StateManager(this, logWindow, gameWindow);
+
         setJMenuBar(new MenuBar(this));
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // Отключаем стандартное действие при закрытии окна
         addWindowListener(new WindowAdapter() {
@@ -43,7 +48,9 @@ public class MainApplicationFrame extends JFrame {
                 confirmAndExit();
             }
         });
+        stateManager.restoreState();
     }
+
 
     /**
      * Подтверждает выход из приложения.
@@ -61,8 +68,10 @@ public class MainApplicationFrame extends JFrame {
                 options[1]
         );
         if (result == JOptionPane.YES_OPTION) {
-            System.exit(0);
+            dispose();
+            stateManager.saveState();
         }
+
     }
 
 
