@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import game.*;
 
 import javax.swing.*;
 
@@ -17,6 +18,9 @@ import state.StateManager;
 public class MainApplicationFrame extends JFrame {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final StateManager stateManager;
+
+    private CoordinatesWindow robotCoordinates;
+    private RobotModel robotModel;
 
     /**
      * Создает новый экземпляр главного окна приложения.
@@ -34,9 +38,14 @@ public class MainApplicationFrame extends JFrame {
         LogWindow logWindow = createLogWindow();
         addWindow(logWindow);
 
-        GameWindow gameWindow = new GameWindow();
+        robotModel = new RobotModel(100, 150);
+
+        GameWindow gameWindow = new GameWindow(robotModel);
         gameWindow.setSize(400, 400);
         addWindow(gameWindow);
+
+        robotCoordinates = new CoordinatesWindow(robotModel);
+        addWindow(robotCoordinates);
 
         stateManager = new StateManager(this, logWindow, gameWindow);
 
@@ -70,7 +79,8 @@ public class MainApplicationFrame extends JFrame {
         if (result == JOptionPane.YES_OPTION) {
             stateManager.saveState();
             dispose();
-            System.exit(1);
+            System.exit(0);
+
         }
 
     }

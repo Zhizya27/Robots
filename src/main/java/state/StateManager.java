@@ -1,6 +1,7 @@
 package state;
 
-import gui.GameWindow;
+import game.CoordinatesWindow;
+import game.GameWindow;
 import gui.LogWindow;
 import gui.MainApplicationFrame;
 
@@ -17,7 +18,6 @@ public class StateManager implements State {
     private final MainApplicationFrame mainFrame;
     private final LogWindow logWindow;
     private final GameWindow gameWindow;
-
     private File configFilePath; // файл для сохранения состояния окна
 
 
@@ -33,7 +33,6 @@ public class StateManager implements State {
         this.logWindow = logWindow;
         this.gameWindow = gameWindow;
     }
-
     /**
      * Метод для сохранения состояния окон
      */
