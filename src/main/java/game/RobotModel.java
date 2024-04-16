@@ -1,6 +1,5 @@
 package game;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.Observable;
 import java.util.Timer;
@@ -159,7 +158,7 @@ public class RobotModel extends Observable {
         if (angleDifference > Math.PI) {
             angleDifference -= 2 * Math.PI;
         } else if (angleDifference < -Math.PI) {
-            angleDifference += 2 * Math.PI;// Если разница меньше -180 градусов, то берем противоположное направление
+            angleDifference += 2 * Math.PI;
         }
 
         double angularVelocity = calculateAngularVelocity(angleDifference); // Если угол положителен,
