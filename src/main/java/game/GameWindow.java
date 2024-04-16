@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 public class GameWindow extends JInternalFrame
 {
-    private final GameVisualizer m_visualizer;
+    private final GameVisualizer visualizer;
     private RobotModel robotModel;
 
     /**
@@ -21,9 +21,9 @@ public class GameWindow extends JInternalFrame
         this.robotModel = robotModel;
         CoordinatesWindow robotCoordinatesDialog = new CoordinatesWindow(this.robotModel);
         add(robotCoordinatesDialog, BorderLayout.NORTH);
-        m_visualizer = new GameVisualizer(robotModel);
+        visualizer = new GameVisualizer(robotModel);
         JPanel panel = new JPanel(new BorderLayout());
-        panel.add(m_visualizer, BorderLayout.CENTER);
+        panel.add(visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);
         pack();
     }

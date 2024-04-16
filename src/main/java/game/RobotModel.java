@@ -2,8 +2,6 @@ package game;
 
 import java.awt.*;
 import java.util.Observable;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class RobotModel extends Observable {
 
@@ -25,11 +23,11 @@ public class RobotModel extends Observable {
     /**
      * позиция цели по координате x
      */
-    private int targetPositionX;
+    private volatile int targetPositionX = 150;
     /**
      * позиция цели по координате y
      */
-    private int targetPositionY;
+    private volatile int targetPositionY = 100;
 
     /**
      * максималная скорость перемещения робота
@@ -41,19 +39,6 @@ public class RobotModel extends Observable {
      */
     private static final double maxAngularVelocity = 0.003;
 
-    /**
-     * Таймер для регулярного вызова метода moveRobot()
-     */
-    private final Timer timer = initTimer();
-
-    /**
-     * Инициализирует таймер для регулярного вызова метода moveRobot().
-     * @return новый объект Timer
-     */
-    private static Timer initTimer() {
-        Timer timer = new Timer("events generator", true);
-        return timer;
-    }
 
     /**
      * Создает новый экземпляр RobotModel с указанной начальной позицией.
@@ -63,12 +48,6 @@ public class RobotModel extends Observable {
     public RobotModel(double initialPositionX, double initialPositionY) {
         this.positionX = initialPositionX;
         this.positionY = initialPositionY;
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                moveRobot();
-            }
-        }, 0, 10);
     }
 
 
@@ -145,7 +124,7 @@ public class RobotModel extends Observable {
     /**
      * Выполняет движение робота к цели.
      */
-    private void moveRobot() {
+    void moveRobot() {
         double distance = distance(targetPositionX, targetPositionY, positionX, positionY);
 
         if (distance < 5) {

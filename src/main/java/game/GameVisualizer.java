@@ -125,4 +125,5 @@ public class GameVisualizer extends JPanel implements Observer {
             repaint();
         }
     }
+
 }
