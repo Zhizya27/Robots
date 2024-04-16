@@ -68,8 +68,9 @@ public class MainApplicationFrame extends JFrame {
                 options[1]
         );
         if (result == JOptionPane.YES_OPTION) {
-            dispose();
             stateManager.saveState();
+            dispose();
+            System.exit(1);
         }
 
     }
