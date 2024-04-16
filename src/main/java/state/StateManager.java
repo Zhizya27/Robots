@@ -18,6 +18,8 @@ public class StateManager implements State {
     private final MainApplicationFrame mainFrame;
     private final LogWindow logWindow;
     private final GameWindow gameWindow;
+
+    private final CoordinatesWindow coordinatesWindow;
     private File configFilePath; // файл для сохранения состояния окна
 
 
@@ -28,10 +30,11 @@ public class StateManager implements State {
      * @param logWindow  окно лога
      * @param gameWindow игровое окно
      */
-    public StateManager(MainApplicationFrame mainFrame, LogWindow logWindow, GameWindow gameWindow) {
+    public StateManager(MainApplicationFrame mainFrame, LogWindow logWindow, GameWindow gameWindow, CoordinatesWindow coordinatesWindow) {
         this.mainFrame = mainFrame;
         this.logWindow = logWindow;
         this.gameWindow = gameWindow;
+        this.coordinatesWindow = coordinatesWindow;
     }
     /**
      * Метод для сохранения состояния окон
@@ -43,6 +46,7 @@ public class StateManager implements State {
         saveComponentState(mainFrame, state, "mainFrame");
         saveComponentState(logWindow, state, "logWindow");
         saveComponentState(gameWindow, state, "gameWindow");
+        saveComponentState(coordinatesWindow, state, "coordinatesWindow");
 
         configFilePath = new File(
                 System.getProperty("user.home") + File.separator + "config.dat"
@@ -73,6 +77,7 @@ public class StateManager implements State {
             restoreComponentState(mainFrame, state, "mainFrame");
             restoreComponentState(logWindow, state, "logWindow");
             restoreComponentState(gameWindow, state, "gameWindow");
+            restoreComponentState(coordinatesWindow, state, "coordinatesWindow");
         }
     }
 
