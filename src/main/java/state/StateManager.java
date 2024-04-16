@@ -1,6 +1,6 @@
 package state;
 
-import gui.GameWindow;
+import game.GameWindow;
 import gui.LogWindow;
 import gui.MainApplicationFrame;
 
@@ -33,7 +33,6 @@ public class StateManager implements State {
         this.logWindow = logWindow;
         this.gameWindow = gameWindow;
     }
-
     /**
      * Метод для сохранения состояния окон
      */
