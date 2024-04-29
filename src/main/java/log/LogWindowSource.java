@@ -1,50 +1,67 @@
 package log;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
- * Что починить:
- * 1. Этот класс порождает утечку ресурсов (связанные слушатели оказываются
- * удерживаемыми в памяти)
- * 2. Этот класс хранит активные сообщения лога, но в такой реализации он 
- * их лишь накапливает. Надо же, чтобы количество сообщений в логе было ограничено 
- * величиной m_iQueueLength (т.е. реально нужна очередь сообщений 
- * ограниченного размера) 
+ * Хранит и управляет логом сообщений. Позволяет регистрировать слушателей,
+ * добавлять сообщения в лог и получать доступ к содержимому лога.
  */
 public class LogWindowSource
 {
-    private int m_iQueueLength;
+    private int queueLength;
     
-    private ArrayList<LogEntry> m_messages;
-    private final ArrayList<LogChangeListener> m_listeners;
+    private ConcurrentLogBuffer m_messages;
+    private final ArrayList<LogChangeListener> listeners;
     private volatile LogChangeListener[] m_activeListeners;
-    
-    public LogWindowSource(int iQueueLength) 
+
+
+    /**
+     * Создает новый экземпляр LogWindowSource с указанной максимальной длиной очереди.
+     *
+     * @param queueLength максимальная длина очереди сообщений в логе
+     */
+    public LogWindowSource(int queueLength)
     {
-        m_iQueueLength = iQueueLength;
-        m_messages = new ArrayList<LogEntry>(iQueueLength);
-        m_listeners = new ArrayList<LogChangeListener>();
+        this.queueLength = queueLength;
+        this.m_messages = new ConcurrentLogBuffer(queueLength);
+        this.listeners = new ArrayList<>();
     }
-    
+
+
+    /**
+     * Регистрирует нового слушателя для изменений в логе.
+     *
+     * @param listener слушатель для регистрации
+     */
     public void registerListener(LogChangeListener listener)
     {
-        synchronized(m_listeners)
+        synchronized(listeners)
         {
-            m_listeners.add(listener);
+            listeners.add(listener);
             m_activeListeners = null;
         }
     }
-    
+
+    /**
+     * Отменяет регистрацию слушателя для изменений в логе.
+     *
+     * @param listener слушатель для отмены регистрации
+     */
     public void unregisterListener(LogChangeListener listener)
     {
-        synchronized(m_listeners)
+        synchronized(listeners)
         {
-            m_listeners.remove(listener);
+            listeners.remove(listener);
             m_activeListeners = null;
         }
     }
-    
+
+    /**
+     * Добавляет новую запись в лог с указанным уровнем и сообщением.
+     *
+     * @param logLevel   уровень логирования
+     * @param strMessage текст сообщения
+     */
     public void append(LogLevel logLevel, String strMessage)
     {
         LogEntry entry = new LogEntry(logLevel, strMessage);
@@ -52,11 +69,11 @@ public class LogWindowSource
         LogChangeListener [] activeListeners = m_activeListeners;
         if (activeListeners == null)
         {
-            synchronized (m_listeners)
+            synchronized (listeners)
             {
                 if (m_activeListeners == null)
                 {
-                    activeListeners = m_listeners.toArray(new LogChangeListener [0]);
+                    activeListeners = listeners.toArray(new LogChangeListener [0]);
                     m_activeListeners = activeListeners;
                 }
             }
@@ -66,24 +83,36 @@ public class LogWindowSource
             listener.onLogChanged();
         }
     }
-    
+
+    /**
+     * Возвращает текущий размер лога (количество сообщений).
+     *
+     * @return текущий размер лога
+     */
     public int size()
     {
         return m_messages.size();
     }
 
+    /**
+     * Возвращает диапазон сообщений из лога, начиная с указанного индекса и указанной длиной.
+     *
+     * @param startFrom индекс, с которого начинать получение сообщений
+     * @param count     количество сообщений для получения
+     * @return итерируемый объект с сообщениями из указанного диапазона
+     */
     public Iterable<LogEntry> range(int startFrom, int count)
     {
-        if (startFrom < 0 || startFrom >= m_messages.size())
-        {
-            return Collections.emptyList();
-        }
-        int indexTo = Math.min(startFrom + count, m_messages.size());
-        return m_messages.subList(startFrom, indexTo);
+        return m_messages.range(startFrom, count);
     }
 
+    /**
+     * Возвращает все сообщения из лога.
+     *
+     * @return итерируемый объект со всеми сообщениями из лога
+     */
     public Iterable<LogEntry> all()
     {
-        return m_messages;
+        return m_messages.all();
     }
 }

@@ -1,5 +1,7 @@
 package game;
 
+import log.Logger;
+
 import java.awt.*;
 import java.util.Observable;
 
@@ -121,13 +123,26 @@ public class RobotModel extends Observable {
         return Math.signum(angleDifference) * maxAngularVelocity;
     }
 
+    private boolean reachedTarget = false;
+
     /**
      * Выполняет движение робота к цели.
      */
     void moveRobot() {
         double distance = distance(targetPositionX, targetPositionY, positionX, positionY);
+        boolean previouslyReached = reachedTarget;
 
         if (distance < 5) {
+            reachedTarget = true;
+        } else {
+            reachedTarget = false;
+        }
+
+        if (reachedTarget && !previouslyReached) {
+           Logger.debug("Робот у цели");
+        }
+
+        if (reachedTarget) {
             return;
         }
 
