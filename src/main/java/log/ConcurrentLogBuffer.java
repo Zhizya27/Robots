@@ -2,14 +2,13 @@ package log;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Потокобезопасный буфер для хранения записей лога
  */
-public class ConcurrentLogBuffer<T> {
+    class ConcurrentLogBuffer<T> {
 
     private final int max_size_buffer; // максимальное кол-во элементов в буфере
     private final ConcurrentLinkedDeque<T> buffer; //экземпляр, явл потокобезопасной реализацией ConcurrentLinkedDeque(двунаправленнной очереди)
