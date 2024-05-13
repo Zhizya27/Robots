@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Frame;
+import java.util.Locale;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;

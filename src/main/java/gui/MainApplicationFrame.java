@@ -5,9 +5,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import game.*;
-
 import javax.swing.*;
-
 import log.Logger;
 import state.StateManager;
 
@@ -17,6 +15,7 @@ import state.StateManager;
  */
 public class MainApplicationFrame extends JFrame {
     private final JDesktopPane desktopPane = new JDesktopPane();
+
     private final StateManager stateManager;
 
     private CoordinatesWindow robotCoordinates;
@@ -52,7 +51,7 @@ public class MainApplicationFrame extends JFrame {
 
         stateManager = new StateManager(this, logWindow, gameWindow, robotCoordinates);
 
-        setJMenuBar(new MenuBar(this));
+        setJMenuBar(new MenuBar(this, logWindow, robotCoordinates, gameWindow));
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // Отключаем стандартное действие при закрытии окна
         addWindowListener(new WindowAdapter() {
             @Override
@@ -68,11 +67,11 @@ public class MainApplicationFrame extends JFrame {
      * Подтверждает выход из приложения.
      */
     void confirmAndExit() {
-        Object[] options = {"Да", "Остаться"};
+        Object[] options = {LocalManager.getString("yesButton"), LocalManager.getString("noButton")};
         int result = JOptionPane.showOptionDialog(
                 this,
-                "Вы уверены, что хотите выйти из приложения?",
-                "Подтверждение выхода",
+                LocalManager.getString("confirmExitMessage"),
+                LocalManager.getString("confirmExitPanel"),
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -88,9 +87,6 @@ public class MainApplicationFrame extends JFrame {
 
     }
 
-
-
-
     /**
      * Создает окно протокола работы(Лог - окно)
      */
@@ -100,7 +96,7 @@ public class MainApplicationFrame extends JFrame {
         logWindow.setSize(300, 800);
         setMinimumSize(logWindow.getSize());
         logWindow.pack();
-        Logger.debug("Протокол работает");
+        Logger.debug("");
         return logWindow;
     }
 
@@ -113,4 +109,6 @@ public class MainApplicationFrame extends JFrame {
         desktopPane.add(frame);
         frame.setVisible(true);
     }
+
+
 }

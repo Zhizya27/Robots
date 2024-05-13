@@ -1,5 +1,7 @@
 package game;
 
+import gui.LocalManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Observable;
@@ -18,7 +20,7 @@ public class CoordinatesWindow extends JInternalFrame implements Observer {
      * @param robotModel модель робота, для которой отображаются координаты
      */
     public CoordinatesWindow(RobotModel robotModel) {
-        super("Координаты робота");
+        super(LocalManager.getString("robotCoordinates"));
         robotModel.addObserver(this); // Подписываемся на уведомления от RobotModel
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(150, 100);
