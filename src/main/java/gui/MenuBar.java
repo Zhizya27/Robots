@@ -9,6 +9,9 @@ import java.awt.event.KeyEvent;
 import java.util.Locale;
 
 
+/**
+ * Представляет главное меню приложение
+ */
 public class MenuBar extends JMenuBar {
 
     private MainApplicationFrame applicationFrame;
@@ -121,6 +124,9 @@ public class MenuBar extends JMenuBar {
     }
 
 
+    /**
+     * Строит меню "Режим отображения"
+     */
     private void buildLanguageMenu(JMenuBar menuBar) {
         languageMenu = new JMenu(LocalManager.getStringLocal("languageMenu"));
         languageMenu.setMnemonic(KeyEvent.VK_X);
@@ -140,6 +146,9 @@ public class MenuBar extends JMenuBar {
         menuBar.add(languageMenu);
     }
 
+    /**
+     * обновляет локализацию
+     */
     private void localization() {
         LocalManager.localization(this);
     }
