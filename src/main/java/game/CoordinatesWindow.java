@@ -20,7 +20,7 @@ public class CoordinatesWindow extends JInternalFrame implements Observer {
      * @param robotModel модель робота, для которой отображаются координаты
      */
     public CoordinatesWindow(RobotModel robotModel) {
-        super(LocalManager.getString("robotCoordinates"));
+        super(LocalManager.getStringLocal("robotCoordinates"));
         robotModel.addObserver(this); // Подписываемся на уведомления от RobotModel
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(150, 100);

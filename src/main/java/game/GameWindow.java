@@ -19,7 +19,7 @@ public class GameWindow extends JInternalFrame
      */
     public GameWindow(RobotModel robotModel)
     {
-        super(LocalManager.getString("playingField"), true, true, true, true);
+        super(LocalManager.getStringLocal("playingField"), true, true, true, true);
         this.robotModel = robotModel;
         CoordinatesWindow robotCoordinatesDialog = new CoordinatesWindow(this.robotModel);
         add(robotCoordinatesDialog, BorderLayout.NORTH);

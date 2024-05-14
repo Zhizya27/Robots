@@ -3,8 +3,6 @@ package gui;
 import game.CoordinatesWindow;
 import game.GameWindow;
 import log.Logger;
-import gui.MainApplicationFrame;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,24 +12,24 @@ import java.util.Locale;
 public class MenuBar extends JMenuBar {
 
     private MainApplicationFrame applicationFrame;
-    private JMenu exitMenu;
-    private JMenu testMenu;
+     JMenu exitMenu;
+     JMenu testMenu;
 
-    private JMenu lookAndFeelMenu;
+     JMenu lookAndFeelMenu;
 
-    private JMenu languageMenu;
+     JMenu languageMenu;
 
-    private JMenuItem addLogMessageItem;
+     JMenuItem addLogMessageItem;
 
-    private  JMenuItem crossplatformLookAndFeel;
+     JMenuItem crossplatformLookAndFeel;
 
-    private  JMenuItem systemLookAndFeel;
+     JMenuItem systemLookAndFeel;
 
-    private JMenuItem exitMenuItem;
+     JMenuItem exitMenuItem;
 
-    private LogWindow logWindow;
-    private CoordinatesWindow coordinatesWindow;
-    private GameWindow gameWindow;
+     LogWindow logWindow;
+     CoordinatesWindow coordinatesWindow;
+     GameWindow gameWindow;
 
 
     /**
@@ -55,19 +53,7 @@ public class MenuBar extends JMenuBar {
 
     }
 
-    private void localization(){
-        exitMenu.setText(LocalManager.getString("exitMenu"));
-        testMenu.setText(LocalManager.getString("testMenu"));
-        lookAndFeelMenu.setText(LocalManager.getString("lookAndFeelMenu"));
-        languageMenu.setText(LocalManager.getString("languageMenu"));
-        addLogMessageItem.setText(LocalManager.getString("addLogMessageItem"));
-        crossplatformLookAndFeel.setText(LocalManager.getString("crossplatformLookAndFeel"));
-        systemLookAndFeel.setText(LocalManager.getString("systemLookAndFeel"));
-        exitMenuItem.setText(LocalManager.getString("exitMenuItem"));
-        logWindow.setTitle(LocalManager.getString("logWindow"));
-        gameWindow.setTitle(LocalManager.getString("playingField"));
-        coordinatesWindow.setTitle(LocalManager.getString("robotCoordinates"));
-    }
+
 
     /**
      * Строит меню "Режим отображения", включающее опции для изменения внешнего вида приложения.
@@ -75,19 +61,19 @@ public class MenuBar extends JMenuBar {
      * @return Меню "Режим отображения"
      */
     private void buildLookAndFeelMenu(JMenuBar menuBar) {
-        lookAndFeelMenu = new JMenu(LocalManager.getString("lookAndFeelMenu"));
+        lookAndFeelMenu = new JMenu(LocalManager.getStringLocal("lookAndFeelMenu"));
         lookAndFeelMenu.setMnemonic(KeyEvent.VK_V);
         lookAndFeelMenu.getAccessibleContext().setAccessibleDescription(
                 "Управление режимом отображения приложения");
 
-        systemLookAndFeel = new JMenuItem(LocalManager.getString("systemLookAndFeel"), KeyEvent.VK_S);
+        systemLookAndFeel = new JMenuItem(LocalManager.getStringLocal("systemLookAndFeel"), KeyEvent.VK_S);
         systemLookAndFeel.addActionListener((event) -> {
             setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             this.invalidate();
         });
         lookAndFeelMenu.add(systemLookAndFeel);
 
-        crossplatformLookAndFeel = new JMenuItem(LocalManager.getString("crossplatformLookAndFeel"), KeyEvent.VK_S);
+        crossplatformLookAndFeel = new JMenuItem(LocalManager.getStringLocal("crossplatformLookAndFeel"), KeyEvent.VK_S);
         crossplatformLookAndFeel.addActionListener((event) -> {
             setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
             this.invalidate();
@@ -103,12 +89,12 @@ public class MenuBar extends JMenuBar {
      * @return Меню "Тесты"
      */
     private void buildTestMenu(JMenuBar menuBar) {
-        testMenu = new JMenu(LocalManager.getString("testMenu"));
+        testMenu = new JMenu(LocalManager.getStringLocal("testMenu"));
         testMenu.setMnemonic(KeyEvent.VK_T);
         testMenu.getAccessibleContext().setAccessibleDescription(
                 "Тестовые команды");
 
-        addLogMessageItem = new JMenuItem(LocalManager.getString("addLogMessageItem"), KeyEvent.VK_S);
+        addLogMessageItem = new JMenuItem(LocalManager.getStringLocal("addLogMessageItem"), KeyEvent.VK_S);
         addLogMessageItem.addActionListener((event) -> {
             Logger.debug("Новая строка");
         });
@@ -122,10 +108,10 @@ public class MenuBar extends JMenuBar {
      * Строит меню "Выход", позволяющее закрыть приложение.
      */
     private void buildExitMenu(JMenuBar menuBar) {
-        exitMenu = new JMenu(LocalManager.getString("exitMenu"));
+        exitMenu = new JMenu(LocalManager.getStringLocal("exitMenu"));
         exitMenu.setMnemonic(KeyEvent.VK_X);
 
-        exitMenuItem = new JMenuItem(LocalManager.getString("exitMenuItem"), KeyEvent.VK_Z);
+        exitMenuItem = new JMenuItem(LocalManager.getStringLocal("exitMenuItem"), KeyEvent.VK_Z);
         exitMenuItem.addActionListener((event) -> { // Добавляется слушатель событий для пункта меню "Закрыть приложение"
                     applicationFrame.confirmAndExit();
                 });
@@ -136,7 +122,7 @@ public class MenuBar extends JMenuBar {
 
 
     private void buildLanguageMenu(JMenuBar menuBar) {
-        languageMenu = new JMenu(LocalManager.getString("languageMenu"));
+        languageMenu = new JMenu(LocalManager.getStringLocal("languageMenu"));
         languageMenu.setMnemonic(KeyEvent.VK_X);
         JMenuItem russianLenguage = new JMenuItem("Русский", KeyEvent.VK_Z);
         russianLenguage.addActionListener((event) -> {
@@ -152,6 +138,10 @@ public class MenuBar extends JMenuBar {
         });
         languageMenu.add(translitLenguage);
         menuBar.add(languageMenu);
+    }
+
+    private void localization() {
+        LocalManager.localization(this);
     }
 
     /**

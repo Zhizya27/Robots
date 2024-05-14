@@ -67,11 +67,11 @@ public class MainApplicationFrame extends JFrame {
      * Подтверждает выход из приложения.
      */
     void confirmAndExit() {
-        Object[] options = {LocalManager.getString("yesButton"), LocalManager.getString("noButton")};
+        Object[] options = {LocalManager.getStringLocal("yesButton"), LocalManager.getStringLocal("noButton")};
         int result = JOptionPane.showOptionDialog(
                 this,
-                LocalManager.getString("confirmExitMessage"),
-                LocalManager.getString("confirmExitPanel"),
+                LocalManager.getStringLocal("confirmExitMessage"),
+                LocalManager.getStringLocal("confirmExitPanel"),
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
