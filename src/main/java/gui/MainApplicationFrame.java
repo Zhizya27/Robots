@@ -6,6 +6,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import game.*;
 import javax.swing.*;
+
+import locale.LocalManager;
 import log.Logger;
 import state.StateManager;
 
@@ -15,13 +17,11 @@ import state.StateManager;
  */
 public class MainApplicationFrame extends JFrame {
     private final JDesktopPane desktopPane = new JDesktopPane();
-
     private final StateManager stateManager;
-
     private CoordinatesWindow robotCoordinates;
     private RobotModel robotModel;
     private GameController gameController;
-    private  GameVisualizer gameVisualizer;
+    private GameVisualizer gameVisualizer;
 
     /**
      * Создает новый экземпляр главного окна приложения.

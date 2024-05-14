@@ -1,6 +1,7 @@
 package game;
 
-import gui.LocalManager;
+import locale.LocalManager;
+import locale.LocalManagerInterface;
 
 import java.awt.BorderLayout;
 import javax.swing.*;
@@ -9,7 +10,7 @@ import javax.swing.*;
 /**
  * Класс GameWindow представляет внутреннее окно с игровым полем.
  */
-public class GameWindow extends JInternalFrame
+public class GameWindow extends JInternalFrame implements LocalManagerInterface
 {
     private final GameVisualizer visualizer;
     private RobotModel robotModel;
@@ -30,4 +31,8 @@ public class GameWindow extends JInternalFrame
         pack();
     }
 
+    @Override
+    public void localization() {
+        setTitle(LocalManager.getStringLocal("playingField"));
+    }
 }

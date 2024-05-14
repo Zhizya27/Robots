@@ -1,5 +1,6 @@
 package game;
 
+import locale.LocalManager;
 import log.Logger;
 
 import java.awt.*;
@@ -139,7 +140,7 @@ public class RobotModel extends Observable {
         }
 
         if (reachedTarget && !previouslyReached) {
-           Logger.debug("Робот у цели");
+           Logger.debug(LocalManager.getStringLocal("informMessage"));
         }
 
         if (reachedTarget) {

@@ -1,6 +1,7 @@
 package game;
 
 
+import locale.LocalManager;
 import log.Logger;
 
 import javax.swing.*;
@@ -31,7 +32,7 @@ public class GameVisualizer extends JPanel implements Observer {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Logger.debug("Робот начал движение");
+                Logger.debug(LocalManager.getStringLocal("startRobotMessage"));
                 int adjustedX = e.getPoint().x;
                 int adjustedY = e.getPoint().y;
                 robotModel.setTargetPosition(new Point(adjustedX, adjustedY));

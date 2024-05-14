@@ -2,17 +2,19 @@ package gui;
 
 import game.CoordinatesWindow;
 import game.GameWindow;
+import locale.LocalManager;
+import locale.LocalManagerInterface;
 import log.Logger;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Locale;
+
 
 
 /**
  * Представляет главное меню приложение
  */
-public class MenuBar extends JMenuBar {
+public class MenuBar extends JMenuBar implements LocalManagerInterface {
 
     private MainApplicationFrame applicationFrame;
      JMenu exitMenu;
@@ -30,10 +32,6 @@ public class MenuBar extends JMenuBar {
 
      JMenuItem exitMenuItem;
 
-     LogWindow logWindow;
-     CoordinatesWindow coordinatesWindow;
-     GameWindow gameWindow;
-
 
     /**
      * Конструктор
@@ -49,14 +47,9 @@ public class MenuBar extends JMenuBar {
         buildExitMenu(menuBar);
         buildLanguageMenu(menuBar);
         this.applicationFrame = applicationFrame;
-        this.logWindow = logWindow;
-        this.coordinatesWindow = coordinatesWindow;
-        this.gameWindow = gameWindow;
         this.add(menuBar);
 
     }
-
-
 
     /**
      * Строит меню "Режим отображения", включающее опции для изменения внешнего вида приложения.
@@ -99,7 +92,7 @@ public class MenuBar extends JMenuBar {
 
         addLogMessageItem = new JMenuItem(LocalManager.getStringLocal("addLogMessageItem"), KeyEvent.VK_S);
         addLogMessageItem.addActionListener((event) -> {
-            Logger.debug("Новая строка");
+            Logger.debug(LocalManager.getStringLocal("newStringMessage"));
         });
         testMenu.add(addLogMessageItem);
 
@@ -133,24 +126,17 @@ public class MenuBar extends JMenuBar {
         JMenuItem russianLenguage = new JMenuItem("Русский", KeyEvent.VK_Z);
         russianLenguage.addActionListener((event) -> {
             LocalManager.setLocale(new Locale("ru"));
-            localization();
+            LocalManager.updateLanguage();
         });
         languageMenu.add(russianLenguage);
 
-        JMenuItem translitLenguage = new JMenuItem("Транслит", KeyEvent.VK_Z);
+        JMenuItem translitLenguage = new JMenuItem("Translit", KeyEvent.VK_Z);
         translitLenguage.addActionListener((event) -> {
             LocalManager.setLocale(new Locale("en"));
-            localization();
+            LocalManager.updateLanguage();
         });
         languageMenu.add(translitLenguage);
         menuBar.add(languageMenu);
-    }
-
-    /**
-     * обновляет локализацию
-     */
-    private void localization() {
-        LocalManager.localization(this);
     }
 
     /**
@@ -166,6 +152,17 @@ public class MenuBar extends JMenuBar {
                  | IllegalAccessException | UnsupportedLookAndFeelException e) {
             // just ignore
         }
+    }
+    @Override
+    public void localization() {
+        exitMenu.setText(LocalManager.getStringLocal("exitMenu"));
+        testMenu.setText(LocalManager.getStringLocal("testMenu"));
+        lookAndFeelMenu.setText(LocalManager.getStringLocal("lookAndFeelMenu"));
+        languageMenu.setText(LocalManager.getStringLocal("languageMenu"));
+        addLogMessageItem.setText(LocalManager.getStringLocal("addLogMessageItem"));
+        crossplatformLookAndFeel.setText(LocalManager.getStringLocal("crossplatformLookAndFeel"));
+        systemLookAndFeel.setText(LocalManager.getStringLocal("systemLookAndFeel"));
+        exitMenuItem.setText(LocalManager.getStringLocal("exitMenuItem"));
     }
 
 }

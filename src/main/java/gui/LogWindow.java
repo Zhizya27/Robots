@@ -3,21 +3,21 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.TextArea;
-import java.util.Map;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
+import locale.LocalManager;
+import locale.LocalManagerInterface;
 import log.LogChangeListener;
 import log.LogEntry;
 import log.LogWindowSource;
-import state.State;
 
 
 /**
  * Класс LogWindow представляет внутреннее окно с протоколом работы.
  */
-public class LogWindow extends JInternalFrame implements LogChangeListener {
+public class LogWindow extends JInternalFrame implements LogChangeListener, LocalManagerInterface {
     private LogWindowSource m_logSource;
     private TextArea m_logContent;
 
@@ -58,5 +58,10 @@ public class LogWindow extends JInternalFrame implements LogChangeListener {
     @Override
     public void onLogChanged() {
         EventQueue.invokeLater(this::updateLogContent);
+    }
+
+    @Override
+    public void localization() {
+        setTitle(LocalManager.getStringLocal("logWindow"));
     }
 }

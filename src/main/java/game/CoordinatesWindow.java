@@ -1,6 +1,7 @@
 package game;
 
-import gui.LocalManager;
+import locale.LocalManager;
+import locale.LocalManagerInterface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.util.Observer;
 /**
  *  представляет внутреннее окно для отображения текущих координат робота.
  */
-public class CoordinatesWindow extends JInternalFrame implements Observer {
+public class CoordinatesWindow extends JInternalFrame implements Observer, LocalManagerInterface {
     private JLabel xLabel;
     private JLabel yLabel;
 
@@ -72,5 +73,10 @@ public class CoordinatesWindow extends JInternalFrame implements Observer {
     private void updateCoordinates(double x, double y) {
         xLabel.setText("X now: " + x);
         yLabel.setText("Y now: " + y);
+    }
+
+    @Override
+    public void localization() {
+        setTitle(LocalManager.getStringLocal("robotCoordinates"));
     }
 }
